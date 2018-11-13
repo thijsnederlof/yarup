@@ -1,8 +1,11 @@
 package nl.thijsnederlof.yarup.server.protocol.connection.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import nl.thijsnederlof.common.connection.ConnectionDetails;
 import nl.thijsnederlof.yarup.server.protocol.message.MessageFactory;
 
+@EqualsAndHashCode
 public class Client {
 
     @Getter
@@ -20,6 +23,6 @@ public class Client {
     }
 
     public void sendMessage(final byte[] message) {
-        messageFactory.sendMessage(connectionDetails.getHost(), connectionDetails.getPort(), message);
+        messageFactory.sendMessage(this, message);
     }
 }

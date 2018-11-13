@@ -1,7 +1,12 @@
 package nl.thijsnederlof.common.util;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class MultiKeyMap<K1, K2, V> {
 
@@ -25,6 +30,10 @@ public class MultiKeyMap<K1, K2, V> {
     }
 
     public long size() {
+        if(k1VHashMap.size() != k2VHashMap.size()) {
+            throw new IllegalStateException("Underlying map sizes of MultiKeyMap are not equal");
+        }
+
         return k1VHashMap.size();
     }
 
@@ -39,6 +48,20 @@ public class MultiKeyMap<K1, K2, V> {
         }
 
         return v;
+    }
+
+    public Set<MultiKeyMap.Entry<K1, K2, V>> entrySet() {
+        final Set<MultiKeyMap.Entry<K1, K2, V>> entrySet = new HashSet<>();
+
+        for(Map.Entry<K1, V> k1VEntry : k1VHashMap.entrySet()) {
+            for(Map.Entry<K2, V> k2VEntry : k2VHashMap.entrySet()) {
+                if(k1VEntry.getValue().equals(k2VEntry.getValue())) {
+                    entrySet.add(new Entry<>(k1VEntry.getKey(), k2VEntry.getKey(), k1VEntry.getValue()));
+                }
+            }
+        }
+
+        return entrySet;
     }
 
     public V removeK2(K2 k2) {
@@ -60,5 +83,16 @@ public class MultiKeyMap<K1, K2, V> {
 
     public V getK2(K2 k2) {
         return k2VHashMap.get(k2);
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class Entry<K1, K2, V> {
+
+        private final K1 k1;
+
+        private final K2 k2;
+
+        private final V value;
     }
 }

@@ -1,9 +1,9 @@
-package nl.thijsnederlof.yarup.server.protocol.handler;
+package nl.thijsnederlof.yarup.server.protocol.handler.disconnect;
 
 import nl.thijsnederlof.yarup.server.protocol.connection.model.Client;
 
 @FunctionalInterface
-public interface DisconnectHandler {
+public interface YarupDisconnectHandler {
 
     void handleDisconnect(final Client client);
 }

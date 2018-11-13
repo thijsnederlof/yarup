@@ -12,6 +12,7 @@
 	<modules>
 		<module>yarup-server</module>
 		<module>yarup-common</module>
+		<module>yarup-client</module>
 	</modules>
 
 	<properties>
